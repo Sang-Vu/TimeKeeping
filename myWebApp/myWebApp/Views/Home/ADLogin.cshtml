@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Administrator Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("ADLogin", "Home", FormMethod.Post))
+
+{
+    <fieldset>
+        <legend>ĐĂNG NHẬP</legend>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @if (@ViewBag.MessageForLogin != null)
+        {
+            <div style="border: 1px solid red">
+                @ViewBag.MessageForLogin
+            </div>
+        }
+        <table>
+            <tr>
+                <td>@Html.Label("Tài khoản")</td>
+                <td>@Html.TextBox("id")</td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.Label("Mật khẩu")
+                </td>
+                <td>
+                    @Html.Password("password")
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Đăng nhập" />
+                </td>
+
+            </tr>
+        </table>
+    </fieldset>
+}
+
+
