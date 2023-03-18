@@ -29,38 +29,36 @@ namespace myWebApp.Controllers
 
         public ActionResult Home()
         {
-            return checkSessionAD("AdminHome","");
-            /*
-            if (!checkSessionAD())
+            if (Session["user"] == null)
             {
                 return RedirectToAction("ADLogin", "Home");
+
             }
-            return View("AdminHome");*/
+            //return checkSessionAD("AdminHome","");
+            //MemberController memberObj = new MemberController();
+            //return memberObj.LogOut("ADLogin", "Home");
+            return RedirectToAction("Homepage", "Home");
         }
 
         public ActionResult EmployeeList()
         {
             return checkSessionAD("AdminEmployeeList","");
-            //return View();
         }
 
         public ActionResult TimekeepingInfo()
         {
-            //return View();
             return checkSessionAD("AdminTimekeepingInfo","");
         }
 
         public ActionResult PasswordChange()
         {
-            //return View();
             return checkSessionAD("PasswordChange","");
         }
 
         public ActionResult LogOut()
         {
-            Session.Remove("user");
-            Session.Remove("userLevel");
-            return RedirectToAction("ADLogin", "Home");
+            MemberController memberObj = new MemberController();
+            return memberObj.LogOut("ADLogin","Home");
         }
     }
 }

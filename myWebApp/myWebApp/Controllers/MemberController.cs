@@ -12,16 +12,6 @@ namespace myWebApp.Controllers
 {
     public class MemberController : Controller
     {
-        // GET: Member
-        public ActionResult Index()
-        {
-            return View();
-        }
-        public ActionResult Homepage()
-        {
-            return RedirectToAction("Homepage", "Home");
-        }
-
         public ActionResult PasswordChange(string newPassword)
         {
             string query;
@@ -44,8 +34,17 @@ namespace myWebApp.Controllers
                     res = cmd.ExecuteNonQuery();
                     con.Close();
                 }
-            }
-            return RedirectToAction("Homepage");
+            }  
+            return RedirectToAction("Homepage", "Home");
         }
+
+        public ActionResult LogOut(string actionName, string controllerName)
+        {
+            Session.Remove("user");
+            Session.Remove("userName");
+            Session.Remove("userLevel");
+            return RedirectToAction(actionName, controllerName);
+        }
+
     }
 }
