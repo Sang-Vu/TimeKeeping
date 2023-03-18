@@ -18,42 +18,12 @@ namespace myWebApp.Controllers
             return View();
         }
 
-        public bool checkSession()
-        {
-            bool sessionExists = true;
-            if (Session["user"] == null)
-            {
-                sessionExists = false;
-            }
-            return sessionExists;
-        }
-
-        public ActionResult Homepage()
-        {
-            if (!checkSession())
-            {
-                return RedirectToAction("Login");
-            }
-            if (Session["userLevel"].ToString() == "0")
-            {
-                return RedirectToAction("Home","Admin");
-            }
-            else if (Session["userLevel"].ToString() == "1")
-            {
-                return RedirectToAction("Home","Manager");
-            }
-            else if (Session["userLevel"].ToString() == "2")
-            {
-                return RedirectToAction("Home","Employee");
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
-        }
-
         public ActionResult Login()
         {
+            if (Session["user"] != null && (Session["userLevel"].ToString() == "1" || Session["userLevel"].ToString() == "2"))
+            {
+                return View();
+            }
             return View();
         }
 
@@ -76,26 +46,25 @@ namespace myWebApp.Controllers
                         {
                             Session["user"] = sdr["id"];
                             Session["userName"] = sdr["name"];
-                            Session["userLevel"] = sdr["accountLevel"];
+                            Session["userLevel"] = sdr["accountLevel"];   
                         }
-                        /*while (sdr.Read())
-                        {
-                            user.Add(new User
-                            {
-                                Id = Convert.ToInt32(sdr["Id"]),
-                                AccountPassword = sdr["AccountPassword"].ToString()
-
-                            });
-                        }*/
                     }
                     con.Close();
                 }
             }
-            return Homepage();
+            if(Session["user"] == null)
+            {
+                return View("Login");
+            }
+            return RedirectToAction("Home", "Member");
         }
 
         public ActionResult ADLogin()
         {
+            if(Session["user"] != null && Session["userLevel"].ToString() == "0")
+            {
+                return View();
+            }
             return View();
         }
 
@@ -122,7 +91,11 @@ namespace myWebApp.Controllers
                     con.Close();
                 }
             }
-            return Homepage();
+            if (Session["user"] == null)
+            {
+                return View("ADLogin");
+            }
+            return RedirectToAction("Home", "Member");
         }
     }
 }

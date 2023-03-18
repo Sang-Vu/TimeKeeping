@@ -23,23 +23,28 @@
                     @{
                         if (Session["userLevel"].ToString() == "0")
                         {
-                            <li>@Html.ActionLink("Danh sách nhân viên", "EmployeeList", "Admin")</li>
-                            <li>@Html.ActionLink("Thông tin chấm công", "TimekeepingInfo", "Admin")</li>
-                            <li>@Html.ActionLink("Đổi MK", "PasswordChange", "Admin")</li>
-                            <li>@Html.ActionLink("Thoát TK", "LogOut", "Admin")</li>
+                            <li>@Html.ActionLink("Trang chủ", "Home", "Member")</li>
+                            <li>@Html.ActionLink("Danh sách nhân viên", "EmployeeList", "Member")</li>
+                            <li>@Html.ActionLink("Thông tin chấm công", "TimekeepingInfo", "Member")</li>
+                            <li>@Html.ActionLink("Đổi MK", "PasswordChange", "Member")</li>
+                            <li>@Html.ActionLink("Thoát TK", "LogOut", "Member")</li>
                         }
                         else if (Session["userLevel"].ToString() == "1")
                         {
-                            <li>@Html.ActionLink("Danh sách nhân viên", "EmployeeList", "Manager")</li>
-                            <li>@Html.ActionLink("Thông tin chấm công", "TimekeepingInfo", "Manager")</li>
-                            <li>@Html.ActionLink("Đổi MK", "PasswordChange", "Manager")</li>
-                            <li>@Html.ActionLink("Thoát TK", "LogOut", "Manager")</li>
+                            <li>@Html.ActionLink("Trang chủ", "Home", "Member")</li>
+                            <li>@Html.ActionLink("Danh sách nhân viên", "EmployeeList", "Member")</li>
+                            <li>@Html.ActionLink("Chấm công", "Timekeeping", "Member")</li>
+                            <li>@Html.ActionLink("Thông tin chấm công", "TimekeepingInfo", "Member")</li>
+                            <li>@Html.ActionLink("Đổi MK", "PasswordChange", "Member")</li>
+                            <li>@Html.ActionLink("Thoát TK", "LogOut", "Member")</li>
                         }
                         else if (Session["userLevel"].ToString() == "2")
                         {
-                            <li>@Html.ActionLink("Thông tin chấm công", "TimekeepingInfo", "Employee")</li>
-                            <li>@Html.ActionLink("Đổi MK", "PasswordChange", "Employee")</li>
-                            <li>@Html.ActionLink("Thoát TK", "LogOut", "Employee")</li>
+                            <li>@Html.ActionLink("Trang chủ", "Home", "Member")</li>
+                            <li>@Html.ActionLink("Chấm công", "Timekeeping", "Member")</li>
+                            <li>@Html.ActionLink("Thông tin chấm công", "TimekeepingInfo", "Member")</li>
+                            <li>@Html.ActionLink("Đổi MK", "PasswordChange", "Member")</li>
+                            <li>@Html.ActionLink("Thoát TK", "LogOut", "Member")</li>
                         }
                     }
 

@@ -13,52 +13,35 @@ namespace myWebApp.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
-        public ActionResult checkSessionAD(string actionName, string controllerName)
-        {
-            if(Session["user"] == null)
-            {
-                return RedirectToAction("ADLogin", "Home");
-
-            }
-            if (controllerName == "")
-            {
-                return View(actionName);
-            }
-            return RedirectToAction(actionName, controllerName);
-        }
 
         public ActionResult Home()
         {
-            if (Session["user"] == null)
-            {
-                return RedirectToAction("ADLogin", "Home");
-
-            }
-            //return checkSessionAD("AdminHome","");
-            //MemberController memberObj = new MemberController();
-            //return memberObj.LogOut("ADLogin", "Home");
-            return RedirectToAction("Homepage", "Home");
+            return View();
         }
 
         public ActionResult EmployeeList()
         {
-            return checkSessionAD("AdminEmployeeList","");
+            return View("AdminHome");
+           
         }
 
         public ActionResult TimekeepingInfo()
         {
-            return checkSessionAD("AdminTimekeepingInfo","");
+            return View("AdminHome");
+            
         }
 
         public ActionResult PasswordChange()
         {
-            return checkSessionAD("PasswordChange","");
+            return View("AdminHome");
+            
         }
 
         public ActionResult LogOut()
         {
-            MemberController memberObj = new MemberController();
-            return memberObj.LogOut("ADLogin","Home");
+            return View();
+           // MemberController memberObj = new MemberController();
+          //  return memberObj.LogOut("ADLogin","Home");
         }
     }
 }

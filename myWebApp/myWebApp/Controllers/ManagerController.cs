@@ -13,7 +13,7 @@ namespace myWebApp.Controllers
     public class ManagerController : Controller
     {
         // GET: Manager
-        public ActionResult Index()
+        public ActionResult Home()
         {
             return View();
         }

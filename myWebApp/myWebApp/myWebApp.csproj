@@ -293,19 +293,15 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Shared\_Layout - Member.cshtml" />
     <Content Include="Views\Home\ADLogin.cshtml" />
-    <Content Include="Views\Home\AdminPage.cshtml" />
-    <Content Include="Views\Home\ManagerPage.cshtml" />
-    <Content Include="Views\Home\EmployeePage.cshtml" />
-    <Content Include="Views\Home\EmployeeList.cshtml" />
-    <Content Include="Views\Admin\AdminHome.cshtml" />
-    <Content Include="Views\Employee\EmployeeHome.cshtml" />
-    <Content Include="Views\Manager\ManagerHome.cshtml" />
-    <Content Include="Views\Admin\AdminPasswordChange.cshtml" />
-    <Content Include="Views\Shared\PasswordChange.cshtml" />
+    <Content Include="Views\Member\EmployeeList.cshtml" />
+    <Content Include="Views\Admin\Home.cshtml" />
+    <Content Include="Views\Employee\Home.cshtml" />
+    <Content Include="Views\Manager\Home.cshtml" />
+    <Content Include="Views\Member\PasswordChange.cshtml" />
+    <Content Include="Views\Member\Timekeeping.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Member\" />
     <Folder Include="Views\Temp\" />
   </ItemGroup>
   <ItemGroup>

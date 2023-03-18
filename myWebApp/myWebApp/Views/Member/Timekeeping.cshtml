@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Employee Page - Home";
+    Layout = "~/Views/Shared/_Layout - Member.cshtml";
+}
+
+@using (Html.BeginForm("TimekeepingDo", "Member", FormMethod.Post))
+{
+    <input type="submit" value="Vào ca" name="TimekeepingIn" />
+    <input type="submit" value="Tan ca" name="TimekeepingOut" />
+}
+
+
+<!--
+<% Html.BeginForm("MyAction", "MyController", FormMethod.Post); %>
+<input type="submit" value="Send" />
+<input type="submit" value="Cancel" />
+<% Html.EndForm(); %>
+
+
+
+<form action="" method="post">
+    <input type="submit" value="Save" name="action:Save" />
+    <input type="submit" value="Cancel" name="action:Cancel" />
+</form>
+-->
