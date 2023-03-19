@@ -299,6 +299,8 @@
     <Content Include="Views\Manager\Home.cshtml" />
     <Content Include="Views\Member\PasswordChange.cshtml" />
     <Content Include="Views\Member\Timekeeping.cshtml" />
+    <Content Include="Views\Home\Info.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

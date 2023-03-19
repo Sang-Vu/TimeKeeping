@@ -15,6 +15,12 @@ namespace myWebApp.Controllers
     {
         public ActionResult Index()
         {
+            //return View();
+            return RedirectToAction("Home");
+        }
+
+        public ActionResult Home()
+        {
             return View();
         }
 
@@ -96,6 +102,11 @@ namespace myWebApp.Controllers
                 return View("ADLogin");
             }
             return RedirectToAction("Home", "Member");
+        }
+
+        public ActionResult ProgramInfo()
+        {
+            return View("Info");
         }
     }
 }
