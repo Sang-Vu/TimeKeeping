@@ -26,6 +26,7 @@
                             <li>@Html.ActionLink("Trang chủ", "Home", "Member")</li>
                             <li>@Html.ActionLink("Danh sách nhân viên", "EmployeeList", "Member")</li>
                             <li>@Html.ActionLink("Thông tin chấm công", "TimekeepingInfo", "Member")</li>
+                            <li>@Html.ActionLink("Phân quyền quản trị", "GrantAdmin", "Member")</li>
                             <li>@Html.ActionLink("Đổi MK", "PasswordChange", "Member")</li>
                             <li>@Html.ActionLink("Thoát TK", "LogOut", "Member")</li>
                         }
@@ -49,6 +50,18 @@
                     }
 
                 </ul>
+
+                @{
+                    if (Session["userName"] == null)
+                    {
+                        <span class="navbar-text text-white">@Session["user"]</span>
+                    }
+                    else
+                    {
+                        <span class="navbar-text text-white">@Session["user"] - @Session["userName"]</span>
+                    }
+                }
+
             </div>
         </div>
     </div>

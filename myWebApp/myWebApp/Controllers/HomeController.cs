@@ -26,9 +26,9 @@ namespace myWebApp.Controllers
 
         public ActionResult Login()
         {
-            if (Session["user"] != null && (Session["userLevel"].ToString() == "1" || Session["userLevel"].ToString() == "2"))
+            if (Session["user"] != null)
             {
-                return View();
+                return RedirectToAction("Home", "Member");
             }
             return View();
         }
@@ -67,9 +67,9 @@ namespace myWebApp.Controllers
 
         public ActionResult ADLogin()
         {
-            if(Session["user"] != null && Session["userLevel"].ToString() == "0")
+            if(Session["user"] != null)
             {
-                return View();
+                return RedirectToAction("Home", "Member");
             }
             return View();
         }
