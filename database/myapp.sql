@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2023 at 04:28 AM
+-- Generation Time: Mar 20, 2023 at 08:35 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -39,7 +39,7 @@ CREATE TABLE `administrator` (
 --
 
 INSERT INTO `administrator` (`userName`, `password`, `createdBy`, `createdTime`) VALUES
-('admin', 'adm', 'Administrator', '2023-02-16 14:00:00');
+('admin', '11', 'Administrator', '2023-02-16 14:00:00');
 
 -- --------------------------------------------------------
 
@@ -146,6 +146,17 @@ CREATE TABLE `timekeeping` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='thông tin chấm công';
 
 --
+-- Dumping data for table `timekeeping`
+--
+
+INSERT INTO `timekeeping` (`id`, `employeeID`, `date`, `timeIn`, `timeOut`, `createdBy`, `modifiedBy`) VALUES
+(1, 1000, '13/08/2023', '10:32:15', NULL, NULL, NULL),
+(2, 1000, '13/08/2023', NULL, '10:34:42', NULL, NULL),
+(3, 1000, '13/08/2023', '10:36:28', NULL, NULL, NULL),
+(4, 1000, '18/03/2023', NULL, '22:40:43', NULL, NULL),
+(5, 1001, '19/03/2023', '14:57:07', NULL, NULL, NULL);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -181,6 +192,16 @@ ALTER TABLE `manager`
 ALTER TABLE `timekeeping`
   ADD PRIMARY KEY (`id`) USING BTREE,
   ADD KEY `employeeID` (`employeeID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `timekeeping`
+--
+ALTER TABLE `timekeeping`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'mã chấm công', AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

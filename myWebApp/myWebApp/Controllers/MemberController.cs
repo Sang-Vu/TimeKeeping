@@ -121,6 +121,38 @@ namespace myWebApp.Controllers
             return View();
         }
 
+        public ActionResult TimekeepingInfo()
+        {
+            string timeSearch = DateTime.Now.ToString("MM/yyyy");
+            List<Timekeeping> timekeepingList = new List<Timekeeping>();
+            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            
+            string query = "SELECT * FROM timekeeping WHERE date LIKE '%/"+ timeSearch + "'";
+            using (MySqlConnection conn = new MySqlConnection(constr))
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query))
+                {
+                    cmd.Connection = conn;
+                    conn.Open();
+                    using (MySqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while(sdr.Read())
+                        {
+                            timekeepingList.Add(new Timekeeping
+                            {
+                                EmployeeID = sdr["employeeID"].ToString(),
+                                Date = sdr["date"].ToString(),
+                                TimeIn = sdr["timeIn"].ToString(),
+                                TimeOut = sdr["timeOut"].ToString()
+                            });
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            return View("TimekeepingList", timekeepingList);
+        }
+
         public ActionResult TimekeepingDo()
         {
             string query = "";

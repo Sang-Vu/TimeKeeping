@@ -251,6 +251,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Administrator.cs" />
+    <Compile Include="Models\Timekeeping.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -301,6 +302,7 @@
     <Content Include="Views\Member\Timekeeping.cshtml" />
     <Content Include="Views\Home\Info.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\Member\TimekeepingList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
