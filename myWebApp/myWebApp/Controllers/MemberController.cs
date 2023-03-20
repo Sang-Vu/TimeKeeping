@@ -14,17 +14,21 @@ namespace myWebApp.Controllers
     {
         public ActionResult Home()
         {
-            if (Session["userLevel"].ToString() == "0")
+            if (Session["user"] != null)
             {
-                return RedirectToAction("Home", "Admin");
-            }
-            else if (Session["userLevel"].ToString() == "1")
-            {
-                return RedirectToAction("Home", "Manager");
-            }
-            else if (Session["userLevel"].ToString() == "2")
-            {
-                return RedirectToAction("Home", "Employee");
+                if (Session["userLevel"].ToString() == "0")
+                {
+                    return RedirectToAction("Home", "Admin");
+                }
+                else if (Session["userLevel"].ToString() == "1")
+                {
+                    return RedirectToAction("Home", "Manager");
+                }
+                else
+                //Session["userLevel"].ToString() == "2"
+                {
+                    return RedirectToAction("Home", "Employee");
+                }
             }
             else
             {
@@ -75,9 +79,13 @@ namespace myWebApp.Controllers
 
         public ActionResult EmployeeList()
         {
-            string query;
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+                string query, constr;
             List<User> userList = new List<User>();
-            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             if (Session["userLevel"].ToString() == "0" || Session["userLevel"].ToString() == "1")
             {
                 if (Session["userLevel"].ToString() == "0")
@@ -118,16 +126,38 @@ namespace myWebApp.Controllers
 
         public ActionResult Timekeeping()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
         public ActionResult TimekeepingInfo()
         {
-            string timeSearch = DateTime.Now.ToString("MM/yyyy");
-            List<Timekeeping> timekeepingList = new List<Timekeeping>();
-            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            string constr, query, timeSearch;
+            timeSearch = DateTime.Now.ToString("MM/yyyy");
+            if (Session["timekeepingType"] == null)
+            {
+                if (Session["userLevel"].ToString() == "0")
+                {
+                    query = "SELECT * FROM timekeeping WHERE date LIKE '%/" + timeSearch + "'";
+                }
+                else
+                //Session["userLevel"].ToString() == "1" || Session["userLevel"].ToString() == "2"
+                {
+                    query = "SELECT * FROM timekeeping WHERE employeeID = '" + Session["user"] + "' AND date LIKE '%/" + timeSearch + "'";
+                }
+            }
             
-            string query = "SELECT * FROM timekeeping WHERE date LIKE '%/"+ timeSearch + "'";
+            List<Timekeeping> timekeepingList = new List<Timekeeping>();
+            constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            
+            
             using (MySqlConnection conn = new MySqlConnection(constr))
             {
                 using (MySqlCommand cmd = new MySqlCommand(query))
@@ -150,11 +180,56 @@ namespace myWebApp.Controllers
                     conn.Close();
                 }
             }
+            ViewBag["timeKeeping"] = "personal";
+            return View("TimekeepingList", timekeepingList);
+        }
+
+        public ActionResult TimekeepingListOfMember()
+        {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
+            string constr, query, timeSearch, employeeID;
+
+            timeSearch = DateTime.Now.ToString("MM/yyyy");
+            employeeID = "1000";
+            query = "SELECT * FROM timekeeping WHERE employeeID='"+ employeeID + "' AND date LIKE '%/" + timeSearch + "'";
+            List<Timekeeping> timekeepingList = new List<Timekeeping>();
+            constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(constr))
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query))
+                {
+                    cmd.Connection = conn;
+                    conn.Open();
+                    using (MySqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            timekeepingList.Add(new Timekeeping
+                            {
+                                EmployeeID = sdr["employeeID"].ToString(),
+                                Date = sdr["date"].ToString(),
+                                TimeIn = sdr["timeIn"].ToString(),
+                                TimeOut = sdr["timeOut"].ToString()
+                            });
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            ViewBag["timeKeeping"] = "member";
             return View("TimekeepingList", timekeepingList);
         }
 
         public ActionResult TimekeepingDo()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             string query = "";
             string constr;
             int res;

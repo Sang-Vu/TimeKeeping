@@ -4,41 +4,59 @@
     ViewBag.Title = "Thông tin chấm công";
     Layout = "~/Views/Shared/_Layout - Member.cshtml";
 }
+<div class="container">
+    <h3>THÔNG TIN CHẤM CÔNG</h3>
+    <ul class="nav nav-tabs">
+        @{
+            if (ViewBag.timeKeeping == "member")
+            {
+                <li class="active">CÁ NHÂN</li>
+                <li>@Html.ActionLink("THÀNH VIÊN", "TimekeepingListOfMember", "Member")</li>
+            }
+            else
+            {
+                <li>@Html.ActionLink("CÁ NHÂN", "TimekeepingList", "Member")</li>
+                <li class="active">THÀNH VIÊN</li>
+            }
+        }
 
-<h2>DANH SÁCH CHẤM CÔNG</h2>
+    </ul>
+    <br>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeIn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeOut)
+            </th>
+        </tr>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.EmployeeID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TimeIn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TimeOut)
-        </th>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeIn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeOut)
+                </td>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmployeeID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TimeIn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TimeOut)
-        </td>
+            </tr>
+        }
 
-    </tr>
-}
+    </table>
+</div>
 
-</table>
