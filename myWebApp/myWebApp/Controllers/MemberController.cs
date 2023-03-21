@@ -141,22 +141,18 @@ namespace myWebApp.Controllers
             }
             string constr, query, timeSearch;
             timeSearch = DateTime.Now.ToString("MM/yyyy");
-            if (Session["timekeepingType"] == null)
+            if (Session["userLevel"].ToString() == "0")
             {
-                if (Session["userLevel"].ToString() == "0")
-                {
-                    query = "SELECT * FROM timekeeping WHERE date LIKE '%/" + timeSearch + "'";
-                }
-                else
-                //Session["userLevel"].ToString() == "1" || Session["userLevel"].ToString() == "2"
-                {
-                    query = "SELECT * FROM timekeeping WHERE employeeID = '" + Session["user"] + "' AND date LIKE '%/" + timeSearch + "'";
-                }
+                query = "SELECT * FROM timekeeping WHERE date LIKE '%/" + timeSearch + "'";
             }
-            
+            else
+                //Session["userLevel"].ToString() == "1" || Session["userLevel"].ToString() == "2"
+            {
+                query = "SELECT * FROM timekeeping WHERE employeeID = '" + Session["user"] + "' AND date LIKE '%/" + timeSearch + "'";
+            }
+    
             List<Timekeeping> timekeepingList = new List<Timekeeping>();
-            constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            
+            constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;          
             
             using (MySqlConnection conn = new MySqlConnection(constr))
             {
@@ -180,7 +176,7 @@ namespace myWebApp.Controllers
                     conn.Close();
                 }
             }
-            ViewBag["timeKeeping"] = "personal";
+            ViewBag.timeKeeping = "personal";
             return View("TimekeepingList", timekeepingList);
         }
 
@@ -220,7 +216,7 @@ namespace myWebApp.Controllers
                     conn.Close();
                 }
             }
-            ViewBag["timeKeeping"] = "member";
+            ViewBag.timeKeeping = "member";
             return View("TimekeepingList", timekeepingList);
         }
 

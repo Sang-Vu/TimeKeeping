@@ -8,15 +8,15 @@
     <h3>THÔNG TIN CHẤM CÔNG</h3>
     <ul class="nav nav-tabs">
         @{
-            if (ViewBag.timeKeeping == "member")
+            if (ViewBag.timeKeeping == "personal")
             {
-                <li class="active">CÁ NHÂN</li>
-                <li>@Html.ActionLink("THÀNH VIÊN", "TimekeepingListOfMember", "Member")</li>
+                <li class="nav-item"><span style="margin:10px">CÁ NHÂN</span></li>
+                <li class="nav-item"><span style="margin:10px">@Html.ActionLink("THÀNH VIÊN", "TimekeepingListOfMember", "Member")</span></li>
             }
             else
             {
-                <li>@Html.ActionLink("CÁ NHÂN", "TimekeepingList", "Member")</li>
-                <li class="active">THÀNH VIÊN</li>
+                <li><span style="margin:10px">@Html.ActionLink("CÁ NHÂN", "TimekeepingInfo", "Member")</span></li>
+                <li><span style="margin:10px">THÀNH VIÊN</span></li>
             }
         }
 
