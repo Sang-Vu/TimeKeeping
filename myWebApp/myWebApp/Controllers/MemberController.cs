@@ -179,29 +179,73 @@ namespace myWebApp.Controllers
             ViewBag.timeKeeping = "personal";
             return View("TimekeepingList", timekeepingList);
         }
-
+        
         public ActionResult TimekeepingListOfMember()
         {
             if (Session["user"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            
-            string constr, query, timeSearch, employeeID;
-
+            string constr, query, timeSearch, employeeID="";
             timeSearch = DateTime.Now.ToString("MM/yyyy");
-            employeeID = "1000";
-            query = "SELECT * FROM timekeeping WHERE employeeID='"+ employeeID + "' AND date LIKE '%/" + timeSearch + "'";
-            List<Timekeeping> timekeepingList = new List<Timekeeping>();
+
             constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            List<User> user_1 = new List<User>();
+            MySqlDataReader sdr;
+            MySqlCommand cmd;
+            string userInfo;
+            List<string> user_2 = new List<string>();
+            List<Timekeeping> timekeepingList = new List<Timekeeping>();
+
             using (MySqlConnection conn = new MySqlConnection(constr))
             {
-                using (MySqlCommand cmd = new MySqlCommand(query))
+                conn.Open();
+                query = "SELECT employee.id, employee.name FROM management INNER JOIN employee ON management.employeeID = employee.id WHERE management.managerID='" + Session["user"] + "'";
+                using (cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Connection = conn;
-                    conn.Open();
-                    using (MySqlDataReader sdr = cmd.ExecuteReader())
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
                     {
+                        user_1.Add(new User {
+                            Id = sdr["id"].ToString(),
+                            Name = sdr["name"].ToString()
+                        });
+                    }  
+                }
+                conn.Close();
+                if(user_1.Count > 0)
+                {
+                    conn.Open();
+                    foreach (User eachUser in user_1)
+                    {              
+                        if (employeeID == null)
+                        {
+                            employeeID = eachUser.Id;
+                        }
+                        query = "SELECT employee.id, employee.name FROM management INNER JOIN employee ON management.employeeID = employee.id WHERE management.managerID='" + eachUser.Id + "'";
+                        userInfo = eachUser.Id + "-" + eachUser.Name;
+                        user_2.Add(userInfo);
+                        using (cmd = new MySqlCommand(query, conn))
+                        {
+                            sdr = cmd.ExecuteReader();
+                            while(sdr.Read())
+                            {
+                                userInfo = sdr["id"].ToString() + "-" + sdr["name"].ToString();
+                                user_2.Add(userInfo);
+                            }
+                        }   
+                    }
+                    conn.Close();
+                }
+                Session["employeeList"] = user_2;
+
+                if(employeeID != null)
+                {
+                    conn.Open();
+                    query = "SELECT * FROM timekeeping WHERE employeeID='" + employeeID + "' AND date LIKE '%/" + timeSearch + "'";
+                    using (cmd = new MySqlCommand(query, conn))
+                    {
+                        sdr = cmd.ExecuteReader();
                         while (sdr.Read())
                         {
                             timekeepingList.Add(new Timekeeping
@@ -211,13 +255,20 @@ namespace myWebApp.Controllers
                                 TimeIn = sdr["timeIn"].ToString(),
                                 TimeOut = sdr["timeOut"].ToString()
                             });
-                        }
+                        }   
                     }
                     conn.Close();
                 }
             }
+            ViewBag.employeeSelected = employeeID;
             ViewBag.timeKeeping = "member";
             return View("TimekeepingList", timekeepingList);
+        }
+
+        [HttpPost]
+        public ActionResult TimekeepingListOfMember(string employeeName)
+        {
+            return View();
         }
 
         public ActionResult TimekeepingDo()
