@@ -25,8 +25,8 @@
             <br />
             using (Html.BeginForm("TimekeepingListOfMember", "Member", FormMethod.Post))
             {
-            <select class="form-select" aria-label="Default select example" name="employeeName">
-                <option value="#">-- member --</option>
+            <select class="form-select" aria-label="Default select example" name="employeeID">
+                
                 @{
                     string employeeID;
                     foreach (string member in (List<string>)Session["employeeList"])
@@ -48,6 +48,7 @@
             }
         }             
     }
+
     <br />
     <table class="table">
         <tr>
