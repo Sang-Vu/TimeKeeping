@@ -7,46 +7,77 @@
 <div class="container">
     <h3>THÔNG TIN CHẤM CÔNG</h3>
 
-    @{ 
-        if (ViewBag.timeKeeping == "personal")
+    @{
+        if (Session["userLevel"].ToString() == "0")
         {
-            <ul class="nav nav-tabs">
-                <li class="nav-item"><span style="margin:10px">CÁ NHÂN</span></li>
-                <li class="nav-item"><span style="margin:10px">@Html.ActionLink("THÀNH VIÊN", "TimekeepingListOfMember", "Member")</span></li>
-            </ul>
+            using (Html.BeginForm("TimekeepingListOfMember", "Member", FormMethod.Post))
+            {
+                <div class="form-inline">
+                    <select class="form-control" name="employeeID">
+
+                        @{
+                            string employeeID;
+                            foreach (string member in (List<string>)Session["employeeList"])
+                            {
+                                employeeID = member.Substring(0, member.IndexOf("-"));
+                                if (ViewBag.employeeSelected == employeeID)
+                                {
+                                    <option value="@employeeID" selected>@member</option>
+                                }
+                                else
+                                {
+                                    <option value="@member.Substring(0, member.IndexOf("-"))">@member</option>
+                                }
+                            }
+                        }
+                    </select>
+                    <input class="btn btn-info" type="submit" value="Xem" />
+                </div>
+            }
         }
         else
         {
-            <ul class="nav nav-tabs">
-                <li><span style="margin:10px">@Html.ActionLink("CÁ NHÂN", "TimekeepingInfo", "Member")</span></li>
-                <li><span style="margin:10px">THÀNH VIÊN</span></li>
-            </ul>
-
-            <br />
-            using (Html.BeginForm("TimekeepingListOfMember", "Member", FormMethod.Post))
+            if (ViewBag.timeKeeping == "personal")
             {
-            <select class="form-select" aria-label="Default select example" name="employeeID">
-                
-                @{
-                    string employeeID;
-                    foreach (string member in (List<string>)Session["employeeList"])
-                    {
-                        employeeID = member.Substring(0, member.IndexOf("-"));
-                        if (ViewBag.employeeSelected == employeeID)
-                        {
-                            <option value="@employeeID" selected>@member</option>
-                        }
-                        else
-                        {
-                            <option value="@member.Substring(0, member.IndexOf("-"))">@member</option>
-                        }
-                    }
-                }
-            </select>
-
-                <input type = "submit" value = "Xem" />
+                <ul class="nav nav-tabs">
+                    <li class="nav-item"><span style="margin:10px">CÁ NHÂN</span></li>
+                    <li class="nav-item"><span style="margin:10px">@Html.ActionLink("THÀNH VIÊN", "TimekeepingListOfMember", "Member")</span></li>
+                </ul>
             }
-        }             
+            else
+            {
+                <ul class="nav nav-tabs">
+                    <li><span style="margin:10px">@Html.ActionLink("CÁ NHÂN", "TimekeepingInfo", "Member")</span></li>
+                    <li><span style="margin:10px">THÀNH VIÊN</span></li>
+                </ul>
+
+                <br />
+                using (Html.BeginForm("TimekeepingListOfMember", "Member", FormMethod.Post))
+                {
+                    <div class="form-inline">
+                        <select class="form-control" name="employeeID">
+
+                            @{
+                                string employeeID;
+                                foreach (string member in (List<string>)Session["employeeList"])
+                                {
+                                    employeeID = member.Substring(0, member.IndexOf("-"));
+                                    if (ViewBag.employeeSelected == employeeID)
+                                    {
+                                        <option value="@employeeID" selected>@member</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@member.Substring(0, member.IndexOf("-"))">@member</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <input class="btn btn-info" type="submit" value="Xem" />
+                    </div>
+                }
+            }
+        }
     }
 
     <br />

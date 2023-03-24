@@ -143,7 +143,8 @@ namespace myWebApp.Controllers
             timeSearch = DateTime.Now.ToString("MM/yyyy");
             if (Session["userLevel"].ToString() == "0")
             {
-                query = "SELECT * FROM timekeeping WHERE date LIKE '%/" + timeSearch + "'";
+                return RedirectToAction("TimekeepingListOfMember");
+                //query = "SELECT * FROM timekeeping WHERE date LIKE '%/" + timeSearch + "'";
             }
             else
                 //Session["userLevel"].ToString() == "1" || Session["userLevel"].ToString() == "2"
