@@ -25,6 +25,12 @@ namespace myWebApp
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            //my script and CSS
+            bundles.Add(new ScriptBundle("~/bundles/myScript").Include(
+                      "~/Scripts/myScript.js"));
+            bundles.Add(new StyleBundle("~/Content/myCSS").Include(
+                      "~/Content/myCSS.css"));
         }
     }
 }

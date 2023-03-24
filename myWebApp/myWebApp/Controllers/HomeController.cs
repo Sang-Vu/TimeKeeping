@@ -60,6 +60,7 @@ namespace myWebApp.Controllers
             }
             if(Session["user"] == null)
             {
+                ViewBag.MessageForLogin = "Thông tin đăng nhập không đúng";
                 return View("Login");
             }
             return RedirectToAction("Home", "Member");
@@ -99,6 +100,7 @@ namespace myWebApp.Controllers
             }
             if (Session["user"] == null)
             {
+                ViewBag.MessageForLogin = "Thông tin đăng nhập không đúng";
                 return View("ADLogin");
             }
             return RedirectToAction("Home", "Member");
@@ -107,6 +109,11 @@ namespace myWebApp.Controllers
         public ActionResult ProgramInfo()
         {
             return View("Info");
+        }
+
+        public ActionResult Error()
+        {
+            return View();
         }
     }
 }

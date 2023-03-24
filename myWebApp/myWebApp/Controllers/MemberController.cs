@@ -334,5 +334,10 @@ namespace myWebApp.Controllers
             }
             return Home();
         }
+
+        public ActionResult GrantAdmin()
+        {
+            return View();
+        }
     }
 }

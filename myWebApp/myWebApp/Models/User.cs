@@ -19,4 +19,10 @@ namespace myWebApp.Models
         public string CreatedBy { get; set; }
         public string CreatedTime { get; set; }
     }
+
+    public class JsonResponseUser
+    {
+        public int ResponseCode { get; set; }
+        public string ResponseMessage { get; set; } = string.Empty;
+    }
 }
