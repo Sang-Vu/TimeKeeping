@@ -22,7 +22,7 @@ namespace myWebApp.Models
 
     public class JsonResponseUser
     {
-        public int ResponseCode { get; set; }
-        public string ResponseMessage { get; set; } = string.Empty;
+        public int Code { get; set; }
+        public string name { get; set; } = string.Empty;
     }
 }

@@ -45,17 +45,12 @@ namespace myWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult PasswordChange(string newPassword)
         {
-            string query;
+            string query,constr;
             int res;
-            if (Session["userLevel"].ToString() == "0")
-            {
-                query = "UPDATE administrator SET password = '" + newPassword + "' WHERE userName='" + Session["user"].ToString() + "'";
-            }
-            else
-            {
-                query = "UPDATE employee SET accountPassword = '" + newPassword + "' WHERE id=" + Session["user"].ToString();
-            }
-            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            query = "UPDATE administrator SET password = '" + newPassword + "' WHERE userName='" + Session["user"].ToString() + "'";
             using (MySqlConnection con = new MySqlConnection(constr))
             {
                 using (MySqlCommand cmd = new MySqlCommand(query))
@@ -65,7 +60,19 @@ namespace myWebApp.Controllers
                     res = cmd.ExecuteNonQuery();
                     con.Close();
                 }
-            }  
+            }
+
+            query = "UPDATE employee SET accountPassword = '" + newPassword + "' WHERE id=" + Session["user"].ToString();
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    res = cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
             return Home();
         }
 
@@ -337,7 +344,114 @@ namespace myWebApp.Controllers
 
         public ActionResult GrantAdmin()
         {
-            return View();
+            List<Administrator> adminList = new List<Administrator>();
+            string constr, query;
+            MySqlConnection conn;
+            MySqlCommand cmd;
+            MySqlDataReader sdr;
+
+            query = "SELECT userName FROM administrator";
+            constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            using (conn = new MySqlConnection(constr))
+            {
+                conn.Open();
+                cmd = new MySqlCommand(query, conn);
+                sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    adminList.Add(new Administrator
+                    {
+                        UserName = sdr["userName"].ToString()
+                    });
+                }
+
+                conn.Close();
+            }
+            return View(adminList);
+        }
+
+        public JsonResult GetDetailsByUserId(int id)
+        {
+            string constr, query, name="";
+            MySqlConnection conn;
+            MySqlCommand cmd;
+            MySqlDataReader sdr;
+
+            query = "SELECT name FROM employee WHERE id="+ id;
+            constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            using (conn = new MySqlConnection(constr))
+            {
+                conn.Open();
+                cmd = new MySqlCommand(query, conn);
+                sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    name = sdr["name"].ToString();
+                }
+                conn.Close();
+            }
+
+            JsonResponseUser info = new JsonResponseUser();
+            if (name != "")
+            {
+                info.Code = 0;
+                info.name = name;
+            }
+            else
+            {
+                info.Code = 1;
+                info.name = "";
+            }
+            //return Json(info);
+            return Json(info, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AddUserToAdmin(int id)
+        {
+            string constr, query, password = "", createdTime;
+            int queryRes;
+            MySqlConnection conn;
+            MySqlCommand cmd;
+            MySqlDataReader sdr;
+
+            constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            query = "SELECT accountPassword FROM employee WHERE id=" + id;
+            using (conn = new MySqlConnection(constr))
+            {
+                conn.Open();
+                cmd = new MySqlCommand(query, conn);
+                sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    password = sdr["accountPassword"].ToString();
+                }
+                conn.Close();
+            }
+
+            createdTime = DateTime.Now.ToString("dd-MM-yyyy") +" "+ DateTime.Now.ToString("HH:mm:ss"); 
+            query = "INSERT INTO administrator (userName,password,createdBy,createdTime) VALUES ('" + id + "','" + password + "','"+ Session["user"] + "','" + createdTime + "')";
+            using (conn = new MySqlConnection(constr))
+            {
+                conn.Open();
+                cmd = new MySqlCommand(query, conn);
+                queryRes = cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+
+            JsonResponseUser res = new JsonResponseUser();
+            if (queryRes > 0)
+            {
+                res.Code = 0;
+            }
+            else
+            {
+                res.Code = 1;
+            }
+            return Json(res);
         }
     }
 }
