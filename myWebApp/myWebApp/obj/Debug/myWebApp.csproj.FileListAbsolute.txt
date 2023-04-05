@@ -894,8 +894,6 @@ E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\Microsoft.Extensions.Primitives
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\Microsoft.Web.Infrastructure.dll
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\MySql.Data.dll
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\mysql.data.entity.EF6.dll
-E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\MySql.Data.EntityFrameworkCore.dll
-E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\MySqlConnector.dll
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\Newtonsoft.Json.dll
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\System.Buffers.dll
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\System.Collections.Immutable.dll
@@ -938,9 +936,6 @@ E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\Microsoft.Extensions.Logging.xm
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\Microsoft.Extensions.Logging.Abstractions.xml
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\Microsoft.Extensions.Options.xml
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\Microsoft.Extensions.Primitives.xml
-E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\MySql.Data.xml
-E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\MySql.Data.EntityFrameworkCore.xml
-E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\MySqlConnector.xml
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\System.Buffers.xml
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\System.Collections.Immutable.xml
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\System.Diagnostics.DiagnosticSource.xml
@@ -959,3 +954,15 @@ E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\Newtonsoft.Json.xml
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\Antlr3.Runtime.pdb
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\obj\Debug\myWebApp.csproj.CopyComplete
+E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\BouncyCastle.Crypto.dll
+E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\Microsoft.Win32.Registry.dll
+E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\System.Diagnostics.PerformanceCounter.dll
+E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\System.Security.AccessControl.dll
+E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\System.Security.Principal.Windows.dll
+E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\WebMatrix.Data.dll
+E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\WebMatrix.WebData.dll
+E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\BouncyCastle.Crypto.xml
+E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\WebMatrix.Data.xml
+E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\WebMatrix.WebData.xml
+E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\Dapper.dll
+E:\Sang\GitHub\TimeKeeping\myWebApp\myWebApp\bin\Dapper.xml

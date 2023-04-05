@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="myappModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="administrator">
+    <Key>
+      <PropertyRef Name="userName" />
+    </Key>
+    <Property Name="userName" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="45" />
+    <Property Name="createdBy" Type="varchar" MaxLength="45" />
+    <Property Name="createdTime" Type="varchar" MaxLength="45" />
+  </EntityType>
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="45" />
+    <Property Name="birthday" Type="varchar" MaxLength="45" />
+    <Property Name="address" Type="text" />
+    <Property Name="phone" Type="varchar" MaxLength="45" />
+    <Property Name="email" Type="varchar" MaxLength="45" />
+    <Property Name="accountPassword" Type="varchar" MaxLength="45" />
+    <Property Name="accountLevel" Type="varchar" MaxLength="45" />
+    <Property Name="createdBy" Type="varchar" MaxLength="45" />
+    <Property Name="createdTime" Type="varchar" MaxLength="45" />
+  </EntityType>
+  <EntityType Name="management">
+    <Key>
+      <PropertyRef Name="managerID" />
+      <PropertyRef Name="employeeID" />
+    </Key>
+    <Property Name="managerID" Type="int" Nullable="false" />
+    <Property Name="employeeID" Type="int" Nullable="false" />
+    <Property Name="department" Type="varchar" MaxLength="45" />
+    <Property Name="createdBy" Type="varchar" MaxLength="45" />
+    <Property Name="createdTime" Type="varchar" MaxLength="45" />
+  </EntityType>
+  <EntityType Name="manager">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="45" />
+    <Property Name="position" Type="varchar" MaxLength="45" />
+    <Property Name="createdBy" Type="varchar" MaxLength="45" />
+    <Property Name="createdTime" Type="varchar" MaxLength="45" />
+  </EntityType>
+  <EntityType Name="timekeeping">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="employeeID" Type="int" />
+    <Property Name="date" Type="varchar" MaxLength="45" />
+    <Property Name="timeIn" Type="varchar" MaxLength="45" />
+    <Property Name="timeOut" Type="varchar" MaxLength="45" />
+    <Property Name="createdBy" Type="varchar" MaxLength="45" />
+    <Property Name="modifiedBy" Type="varchar" MaxLength="45" />
+  </EntityType>
+  <Association Name="fk_employee_management">
+    <End Role="employee" Type="Self.employee" Multiplicity="1" />
+    <End Role="management" Type="Self.management" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="management">
+        <PropertyRef Name="employeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_employee_timekeeping">
+    <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+    <End Role="timekeeping" Type="Self.timekeeping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="timekeeping">
+        <PropertyRef Name="employeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_manager_management">
+    <End Role="manager" Type="Self.manager" Multiplicity="1" />
+    <End Role="management" Type="Self.management" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="manager">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="management">
+        <PropertyRef Name="managerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="myappModelStoreContainer">
+    <EntitySet Name="administrator" EntityType="Self.administrator" Schema="myapp" store:Type="Tables" />
+    <EntitySet Name="employee" EntityType="Self.employee" Schema="myapp" store:Type="Tables" />
+    <EntitySet Name="management" EntityType="Self.management" Schema="myapp" store:Type="Tables" />
+    <EntitySet Name="manager" EntityType="Self.manager" Schema="myapp" store:Type="Tables" />
+    <EntitySet Name="timekeeping" EntityType="Self.timekeeping" Schema="myapp" store:Type="Tables" />
+    <AssociationSet Name="fk_employee_management" Association="Self.fk_employee_management">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="management" EntitySet="management" />
+    </AssociationSet>
+    <AssociationSet Name="fk_employee_timekeeping" Association="Self.fk_employee_timekeeping">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="timekeeping" EntitySet="timekeeping" />
+    </AssociationSet>
+    <AssociationSet Name="fk_manager_management" Association="Self.fk_manager_management">
+      <End Role="manager" EntitySet="manager" />
+      <End Role="management" EntitySet="management" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

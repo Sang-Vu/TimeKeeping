@@ -83,15 +83,34 @@ namespace myWebApp.Controllers
             Session.Remove("userLevel");
             return RedirectToAction("Index", "Home");
         }
-
+        
         public ActionResult EmployeeList()
         {
+            User us = new User();
+            
             if (Session["user"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
                 string query, constr;
             List<User> userList = new List<User>();
+            //----------------------
+            myappEntities md = new myappEntities();
+            var employeeList = from c in md.employee
+                               orderby c.name
+                               select new { c.id, c.name };
+            foreach(var usr in employeeList)
+            {
+                userList.Add(new User
+                {
+                    Id = usr.id.ToString(),
+                    Name = usr.name
+                });
+            }
+
+            
+            //----------------------------
+            /*
             constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             if (Session["userLevel"].ToString() == "0" || Session["userLevel"].ToString() == "1")
             {
@@ -127,7 +146,7 @@ namespace myWebApp.Controllers
             else
             {
                 return RedirectToAction("Index", "Home");
-            }
+            }*/
             return View(userList);
         }
 
@@ -345,6 +364,9 @@ namespace myWebApp.Controllers
         public ActionResult GrantAdmin()
         {
             List<Administrator> adminList = new List<Administrator>();
+            Administrator adm = new Administrator();
+            adminList = adm.GetAllAdmin();
+            /*
             string constr, query;
             MySqlConnection conn;
             MySqlCommand cmd;
@@ -367,7 +389,7 @@ namespace myWebApp.Controllers
                 }
 
                 conn.Close();
-            }
+            }*/
             return View(adminList);
         }
 
